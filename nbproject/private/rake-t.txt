@@ -1,0 +1,6 @@
+(in /home/ai/Разработка/ruby2jar)
+rake clobber_rcov  # Remove rcov products for rcov
+rake rcov          # RCov
+rake spec          # Run a specific spec with TASK=xxxx
+rake specs         # Run all specs
+rake specs_html    # Run all specs output html

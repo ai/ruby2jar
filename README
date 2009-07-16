@@ -1,0 +1,49 @@
+= Ruby2Jar - build JAR from Ruby script
+
+Ruby2Jar builds JAR from a Ruby script. It copies gems, compiles sources
+and packages JAR. It is an easy way to distribute your JRuby application or 
+create Applet or Java Web Start.
+
+== Installation
+Use Gem to download and install Ruby2Jar.
+
+   gem install ruby2jar
+
+You must have Java Development Kit to use JAR builder. Also you should run it 
+from JRuby for correct platform in gems.
+
+== Usage
+Add task to build JAR in Rakefile:
+
+  require "rubygems"
+  require "ruby2jar"
+  
+  PKG_NAME = "program"
+  PKG_VERSION = "0.1"
+  
+  Ruby2Jar::Rake::JarTask.new do |jar|
+    jar.files = FileList["lib/**/*", "bin/*"]
+    jar.main = "bin/program"
+    jar.name = PKG_NAME
+    jar.version = PKG_VERSION
+    jar.add_dependency "rspec"
+  end
+
+== Limitation
+In current JRuby version (1.1.2) you can't use Ruby file system functions 
+and +__FILE__+ constant in JAR. So didn't use <tt>Dir.glob</tt> to require 
+all files in dir or somethink like this.
+
+If program containt Java files it must be in ext/ dir. Source Java files 
+without class files will be compiled.
+
+== Gem config
+Gem can contain building config <tt>java.yaml</tt> in gem root. Builder will 
+find list of exclude file patterns in <tt>jar.exclude</tt> config node.
+
+== License
+Ruby2Jar is licensed under the GNU General Public License version 3.
+You can read it in LICENSE file or in http://www.gnu.org/licenses/gpl.html .
+
+== Author
+Andrey "A.I." Sitnik <andrey@sitnik.ru>
